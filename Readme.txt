@@ -1,4 +1,4 @@
-Micronucleus V2.03
+Micronucleus V2.04
 ==================
 
 Micronucleus is a bootloader designed for AVR ATtiny microcontrollers with a minimal usb interface, cross platform libusb-based program upload tool, and a strong emphasis on bootloader compactness. To the authors knowledge this is, by far, the smallest USB bootloader for AVR ATtiny
@@ -44,12 +44,16 @@ To allow maximum flexibility, micronucleus supports a configuration system. To c
 
 Currently, the following configurations are included and tested. Please check the subfolders /firmware/configurations/ for details. Hex files can be found in /releases.
 
-t84_default     -   ATtiny84A default configuration     -   1542 bytes
-t841_default    -   ATtiny841 default configuration     -   1594 bytes
-t85_default     -   ATtiny85  default configuration     -   1596 bytes
-t85_aggressive  -   ATtiny85  smaller size - critical   -   1426 bytes
-t167_default    -   ATtiny167 default (uses xtal)       -   1422 bytes
-Nanite841       -   Nanite841 firmware                  -   1618 bytes
+t84_default     -   ATtiny84A default configuration     -   1534 bytes
+t841_default    -   ATtiny841 default configuration     -   1586 bytes
+t45_default     -   ATtiny45  default configuration     -   1588 bytes
+t85_default     -   ATtiny85  default configuration     -   1588 bytes
+t85_aggressive  -   ATtiny85  smaller size - critical   -   1418 bytes
+t167_default    -   ATtiny167 default (uses xtal)       -   1412 bytes
+Nanite841       -   Nanite841 firmware                  -   1610 bytes
+m328p_extclock  -   ATMega328p external clock           -   1434 bytes
+
+Please note that the configuration "t85_aggressive" may be instable unders certain circumstances. Please revert to "t85_default" if downloading of user programs fails.
 
 You can add your own configuration by adding a new folder to /firmware/configurations/. The folder has to contain a customized "Makefile.inc" and "bootloaderconfig.h". Feel free to supply a pull request if you added and tested a previously unsupported device.
 
@@ -121,12 +125,19 @@ Changes
       device if micronucleus is restarted after an USB error.       
     - #74 Fixed LED_INIT macro so it only modifies the DDR register bit of the LED.
       (Thanks @russdill)
- 
+
+• v2.04 Dec 8th, 2018
+    - Merged changed to support ATMega328p by @AHorneffer (#132)    
+    - Idlepolls is now only reset when traffic to the current endpoint is detected.
+      This will let micronucleus timeout also when traffic from other USB devices
+      is present on the bus.
+
 Credits
 =======
 
 Firmware:
- • Micronucleus V2.03            (c) 2016 Tim Bo"scke - cpldcpu@gmail.com
+ • Micronucleus V2.04            (c) 2019 Current maintainers: @cpldcpu, @AHorneffer
+ • Micronucleus V2.0x            (c) 2016 Tim Bo"scke - cpldcpu@gmail.com
                                  (c) 2014 Shay Green
  • Original Micronucleus         (c) 2012 Jenna Fox
  • Based on USBaspLoader-tiny85  (c) 2012 Louis Beaudoin
